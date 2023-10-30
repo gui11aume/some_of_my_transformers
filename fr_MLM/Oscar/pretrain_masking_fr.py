@@ -44,7 +44,6 @@ class plTrainHarness(pl.LightningModule):
       self.decay = decay
 
    def configure_optimizers(self):
-      # Use lr 5e-5, AdamW and linear decay with warmup.
       optimizer = torch.optim.AdamW(
           self.trainer.model.parameters(),
           lr = 6e-4,
@@ -60,7 +59,6 @@ class plTrainHarness(pl.LightningModule):
             start_factor = 1.,
             end_factor = 0.01,
             total_iters = self.decay)
-      #scheduler = torch.optim.lr_scheduler.ChainedScheduler([
       scheduler = torch.optim.lr_scheduler.SequentialLR(
             optimizer = optimizer,
             schedulers = [warmup, linear_decay],
